@@ -1,0 +1,25 @@
+header {
+    text-align: center;
+    display: block;
+    width: 90%;
+}
+
+body {
+    display: block;
+}
+
+
+section {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+main {
+    
+    border: 1px solid black;
+}
+
+.hide-me {
+    display: none;
+}

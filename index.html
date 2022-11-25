@@ -1,9 +1,43 @@
 <!DOCTYPE html>
     <head>
-
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="./assets/style.css">
+        <title>Weather Dashboard</title>
     </head>
 
-    <body>
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
 
+    <body>
+        <!-- section for performing a search and housing past searches-->
+        <section id="searches">
+            <h2>Search for a City</h2>
+            <textarea id="searchedCity" placeholder="Type your city here"></textarea>
+            <button id="searchButton">Search</button>
+            <hr>
+        </section>
+
+        <!-- section housing weather details for a given city -->
+        <main id="results">
+            <p>I'm just here to show where the main section is.</p>
+            <div id="today">
+
+            </div>
+            <div id="5day">
+                <div id="tPlusOne"></div>
+                <div id="tPlusTwo"></div>
+                <div id="tPlusThree"></div>
+                <div id="tPlusFour"></div>
+                <div id="tPlusFive"></div>
+
+            </div>
+
+        </main>
+
+        <script src="./assets/main.js"></script>
     </body>
+
 </html>
