@@ -23,9 +23,9 @@ var searchButton = document.getElementById('searchButton');
 
 searchButton.addEventListener('click', setCity);
 
-// variable to hold the geocode results
+// variable to store searched cities
 
-var geocodeResults = JSON.parse(localStorage.getItem('geocodeResults')) || [];
+var cities = [];
 
 // variable to hold the 5-day results
 
@@ -33,13 +33,15 @@ var fiveDay = 'bbb' || [];
 
 // 5DayUrl = api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&units=imperial&appid={API key}
 
-// need a function to create an object containing the searched city name and its lat and lon to plug into the 5DayUrl
 // Array.unshift will add an object to the array's first position.
 
+// function to set the city value required for the geocode API
 function setCity() {
     // sets the city variable based on the user's search
     if (searchedCity.value) {
     city = searchedCity.value.trim();
+    cities.push(city);
+    localStorage.setItem('cities', JSON.stringify(cities));
     // gets geocode data for the searched city
     geocodeApi();
     } else {
@@ -57,8 +59,14 @@ function geocodeApi() {
         .then(function (geocodeData) {
             // we need to figure out how to store the results of each search so that we can access them again later.
             localStorage.setItem('geocodeResults', JSON.stringify(geocodeData));
-            geocodeResults.unshift(JSON.parse(localStorage.getItem('geocodeResults')));
+            // geocodeResults.unshift(JSON.parse(localStorage.getItem('geocodeResults')));
         })
 }
 
-localStorage.clear()
+// function to query the 5-day API using the lat and lon values from the geocode API
+
+// function to set a button under the search bar for previously searched cities - include a clear all button if cities.length > 0
+
+// function to render weather data for the current city
+
+// pageload function to render cities buttons if anything exists in its localstorage container
