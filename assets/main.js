@@ -8,8 +8,18 @@ var myKey = '69408b91f433def6af6c538d44d5e090'
 
 // global variables
 
+// becomes the currently searched city for the API functions
 var city = "";
+// placeholder for the geocode API URL
 var geocodingUrl = "";
+// placeholder for the current city's geocode data for accessing lat and lon
+var geocodedCity;
+// placeholder for the current city's lat
+var geocodedCityLat;
+// placeholder for the current city's lon
+var geocodedCityLon;
+// placeholder for the 5-day API URL
+var fiveDayURL;
 
 // variable to ID the search textarea
 
@@ -25,13 +35,11 @@ searchButton.addEventListener('click', setCity);
 
 // variable to store searched cities
 
-var cities = [];
+var cities = [] || localStorage.setItem('cities', JSON.stringify(cities));
 
 // variable to hold the 5-day results
 
 var fiveDay = 'bbb' || [];
-
-// 5DayUrl = api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&units=imperial&appid={API key}
 
 // Array.unshift will add an object to the array's first position.
 
@@ -50,7 +58,7 @@ function setCity() {
 }
 
 function geocodeApi() {
-    geocodingUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=' + myKey;
+    geocodingUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=' + myKey;
     // queries the geocode API to obtain latitude and longitude for a searched city
     fetch(geocodingUrl)
         .then(function (response) {
@@ -59,11 +67,19 @@ function geocodeApi() {
         .then(function (geocodeData) {
             // we need to figure out how to store the results of each search so that we can access them again later.
             localStorage.setItem('geocodeResults', JSON.stringify(geocodeData));
-            // geocodeResults.unshift(JSON.parse(localStorage.getItem('geocodeResults')));
+            // sets the global variable for the current city
+            geocodedCity = JSON.parse(localStorage.getItem('geocodeResults'));
+            // sets the lat and lon for the current city with two decimal places
+            geocodedCityLat = geocodedCity[0].lat.toFixed(2);
+            geocodedCityLon = geocodedCity[0].lon.toFixed(2);
         })
 }
 
 // function to query the 5-day API using the lat and lon values from the geocode API
+
+function fiveDayApi() {
+    fiveDayURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + geocodedCityLat + '&lon=' + geocodedCityLon + '&units=imperial&appid=' + myKey;
+}
 
 // function to set a button under the search bar for previously searched cities - include a clear all button if cities.length > 0
 

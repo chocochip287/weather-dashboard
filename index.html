@@ -7,24 +7,31 @@
         <title>Weather Dashboard</title>
     </head>
 
-    <header>
-        <h1>Weather Dashboard</h1>
-    </header>
-
     <body>
-        <!-- section for performing a search and housing past searches-->
-        <section id="searches">
-            <h2>Search for a City</h2>
-            <textarea id="searchedCity" placeholder="Type your city here"></textarea>
-            <button id="searchButton">Search</button>
-            <hr>
-        </section>
+        <header>
+            <h1>Weather Dashboard</h1>
+        </header>
+        
+        <section id="main">
+
+            <!-- div for performing a search and housing past searches-->
+            <div id="searchDiv">
+                <h2>Search for a City</h2>
+                <textarea id="searchedCity" placeholder="Type your city here"></textarea>
+                <button id="searchButton">Search</button>
+                <hr>
+                <!-- buttons for searched cities will appear here -->
+                <div id="searchHistory">
+
+                    <button id="clearButton" class="hide-me"></button>
+                </div>
+            </div>
 
         <!-- section housing weather details for a given city -->
-        <main id="results">
+        <div id="currentCity">
             <p>I'm just here to show where the main section is.</p>
             <div id="today">
-
+                This is the today div.
             </div>
             <div id="5day">
                 <div id="tPlusOne"></div>
@@ -35,8 +42,8 @@
 
             </div>
 
-        </main>
-
+        </div>
+        </section>
         <script src="./assets/main.js"></script>
     </body>
 

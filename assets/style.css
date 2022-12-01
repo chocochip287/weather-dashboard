@@ -1,23 +1,37 @@
 header {
     text-align: center;
-    display: block;
-    width: 90%;
+    border: 2px solid orange;
+    position: static;
 }
 
 body {
-    display: block;
+    border: 2px solid red;
+    height: 500px;
 }
 
+#main {
+    display: flex;
+}
 
-section {
+#searchDiv {
     display: flex;
     flex-direction: column;
-    width: 20%;
+    border: 2px solid green;
+    width: 30%;
 }
 
-main {
-    
-    border: 1px solid black;
+#searchButton {
+    padding: 5px;
+}
+
+#searchHistory {
+    display: flex;
+    flex-direction: column;
+}
+
+#currentCity {
+    border: 2px solid black;
+    width: 70%;
 }
 
 .hide-me {
