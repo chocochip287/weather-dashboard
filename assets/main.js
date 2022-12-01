@@ -1,6 +1,6 @@
 /* 11/26/2022
-- dates from the 5-day API need to be converted from Unix to human-readable if using the dt key. otherwise, use the dt_txt key.
-- figure out locally storing an array and a way to clear it.
+- the dt_txt 
+- check out your note on line 38 about storing the searched cities.
 */
 
 // OpenWeather 5-day API key
@@ -20,6 +20,8 @@ var geocodedCityLat;
 var geocodedCityLon;
 // placeholder for the 5-day API URL
 var fiveDayURL;
+// placeholder for the current city's 5-day data
+var cityFiveDay;
 
 // variable to ID the search textarea
 
@@ -33,7 +35,7 @@ var searchButton = document.getElementById('searchButton');
 
 searchButton.addEventListener('click', setCity);
 
-// variable to store searched cities
+// variable to store searched cities - update this to 
 
 var cities = [] || localStorage.setItem('cities', JSON.stringify(cities));
 
@@ -79,6 +81,21 @@ function geocodeApi() {
 
 function fiveDayApi() {
     fiveDayURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + geocodedCityLat + '&lon=' + geocodedCityLon + '&units=imperial&appid=' + myKey;
+    fetch(fiveDayURL)
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (fiveDayData) {
+        // we need to figure out how to store the results of each search so that we can access them again later.
+        localStorage.setItem('fiveDayResults', JSON.stringify(fiveDayData));
+        // sets the global variable for the current city
+        cityFiveDay = JSON.parse(localStorage.getItem('fiveDayResults'));
+    })
+
+    // cityFiveDay.list[0].main.feels_like = the 'feels like' temperature of the first interval 
+    // cityFiveDay.list[0].main.humidity = the humidity of the first interval
+    // cityFiveDay.list[0].wind.speed = the wind of the first interval 
+    // every 8th item is a new day, so the indexes should run 0, 8, 16, 24, 32
 }
 
 // function to set a button under the search bar for previously searched cities - include a clear all button if cities.length > 0
