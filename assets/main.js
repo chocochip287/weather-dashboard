@@ -1,6 +1,10 @@
-/* 11/26/2022
-- the dt_txt 
-- check out your note on line 38 about storing the searched cities.
+/* 12/3/2022
+- the dt_txt key in the fiveDayResults object contains the actual date
+
+POST-MVP CONSIDERATIONS
+------
+- add a check to ensure that cities are searched in uniform format regardless of input (e.g., first letter of each word capitalized) and not added to the cities array if they already exist.
+- set up more thorough date checking - the data returned from the five day API is relative to the time of day for the user (e.g., searching Tokyo and Philadelphia at roughly 11:30 EST on 12/3, both sets of results had 12/3 at 18:00 even though it was roughly 01:30 JST on 12/4 in Tokyo at the time
 */
 
 // OpenWeather 5-day API key
@@ -23,6 +27,14 @@ var fiveDayURL;
 // placeholder for the current city's 5-day data
 var cityFiveDay;
 
+// document variables
+
+// variable for the search history area
+var searchArea = document.getElementById('searchHistory');
+
+// variable for the clear search history button
+var searchClearButton = document.getElementById('clearButton');
+
 // variable to ID the search textarea
 
 var searchedCity = document.getElementById('searchedCity');
@@ -35,9 +47,13 @@ var searchButton = document.getElementById('searchButton');
 
 searchButton.addEventListener('click', setCity);
 
-// variable to store searched cities - update this to 
+// defines the cities variable based on whether or not any cities existed in localStorage
 
-var cities = [] || localStorage.setItem('cities', JSON.stringify(cities));
+if (localStorage.getItem('cities') === null) {
+    var cities = [];
+} else {
+    var cities = JSON.parse(localStorage.getItem('cities'));
+}
 
 // variable to hold the 5-day results
 
@@ -74,6 +90,7 @@ function geocodeApi() {
             // sets the lat and lon for the current city with two decimal places
             geocodedCityLat = geocodedCity[0].lat.toFixed(2);
             geocodedCityLon = geocodedCity[0].lon.toFixed(2);
+            fiveDayApi();
         })
 }
 
@@ -90,6 +107,7 @@ function fiveDayApi() {
         localStorage.setItem('fiveDayResults', JSON.stringify(fiveDayData));
         // sets the global variable for the current city
         cityFiveDay = JSON.parse(localStorage.getItem('fiveDayResults'));
+        searchUpdate();
     })
 
     // cityFiveDay.list[0].main.feels_like = the 'feels like' temperature of the first interval 
@@ -98,8 +116,37 @@ function fiveDayApi() {
     // every 8th item is a new day, so the indexes should run 0, 8, 16, 24, 32
 }
 
-// function to set a button under the search bar for previously searched cities - include a clear all button if cities.length > 0
+// function to set a button under the search bar for previously searched cities and unhide the search clear button on page load if cities exist in storage
 
+if (cities.length > 0) {
+    searchClearButton.removeAttribute('class', 'hide-me');
+    searchUpdate();
+}
+
+// function to modify the search area with any cities in the cities array
+
+function searchUpdate() {
+    for (var i=0; i < cities.length; i++) { 
+        searchClearButton.removeAttribute('class', 'hide-me');
+        // appends buttons for each item in the cities array into the search history field
+        var makeButton = document.createElement('button');
+        // creates a new button
+        if (searchArea.children.length < cities.length) {
+        searchArea.appendChild(makeButton);
+        }
+        searchArea.children[i].textContent = cities[i];
+        searchArea.children[i].setAttribute('class', 'searchedCities');
+        searchArea.children[i].addEventListener('click', modifyCity);
+    }
+}
+
+// function to update the city variable from a search history button and call the APIs again
+
+function modifyCity() {
+    console.log('this is sure going to do something eventually!');
+}
+
+// function to
 // function to render weather data for the current city
 
 // pageload function to render cities buttons if anything exists in its localstorage container
