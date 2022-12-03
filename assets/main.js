@@ -55,12 +55,6 @@ if (localStorage.getItem('cities') === null) {
     var cities = JSON.parse(localStorage.getItem('cities'));
 }
 
-// variable to hold the 5-day results
-
-var fiveDay = 'bbb' || [];
-
-// Array.unshift will add an object to the array's first position.
-
 // function to set the city value required for the geocode API
 function setCity() {
     // sets the city variable based on the user's search
@@ -107,6 +101,7 @@ function fiveDayApi() {
         localStorage.setItem('fiveDayResults', JSON.stringify(fiveDayData));
         // sets the global variable for the current city
         cityFiveDay = JSON.parse(localStorage.getItem('fiveDayResults'));
+
         searchUpdate();
     })
 
@@ -142,11 +137,18 @@ function searchUpdate() {
 
 // function to update the city variable from a search history button and call the APIs again
 
-function modifyCity() {
-    console.log('this is sure going to do something eventually!');
+function modifyCity(event) {
+    for (var i=0; i < searchArea.children.length; i++) {
+        // ignores search history buttons that aren't targeted
+        if (event.target !== searchArea.children[i]) {
+            continue
+        }
+        // updates the city variable to match the text content of the button and repeats the fetch and render functions
+        city = searchArea.children[i].textContent;
+        geocodeApi();
+    }
 }
 
-// function to
 // function to render weather data for the current city
 
 // pageload function to render cities buttons if anything exists in its localstorage container
