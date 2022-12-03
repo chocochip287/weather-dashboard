@@ -124,11 +124,6 @@ function fiveDayApi() {
         searchUpdate();
         renderWeatherData();
     })
-
-    // cityFiveDay.list[0].main.feels_like = the 'feels like' temperature of the first interval 
-    // cityFiveDay.list[0].main.humidity = the humidity of the first interval
-    // cityFiveDay.list[0].wind.speed = the wind of the first interval 
-    // every 8th item is a new day, so the indexes should run 0, 8, 16, 24, 32
 }
 
 // function to set a button under the search bar for previously searched cities and unhide the search clear button on page load if cities exist in storage
