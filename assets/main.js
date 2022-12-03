@@ -1,10 +1,11 @@
 /* 12/3/2022
-- the dt_txt key in the fiveDayResults object contains the actual date
+- nothing for now. MVP achieved
 
 POST-MVP CONSIDERATIONS
 ------
 - add a check to ensure that cities are searched in uniform format regardless of input (e.g., first letter of each word capitalized) and not added to the cities array if they already exist.
 - set up more thorough date checking - the data returned from the five day API is relative to the time of day for the user (e.g., searching Tokyo and Philadelphia at roughly 11:30 EST on 12/3, both sets of results had 12/3 at 18:00 even though it was roughly 01:30 JST on 12/4 in Tokyo at the time
+- expand clear functionality to return the results panel to the start and clear the previously searched buttons
 */
 
 // OpenWeather 5-day API key
@@ -24,6 +25,9 @@ var geocodedCityLat;
 var geocodedCityLon;
 // placeholder for the 5-day API URL
 var fiveDayURL;
+// today's date using moment
+var todaysDate = moment().format('MM/DD/YYYY');
+
 // placeholder for the current city's 5-day data - uses localStorage item if available
 if (localStorage.getItem('fiveDayResults') === null) {
     var cityFiveDay = [];
@@ -46,6 +50,7 @@ var searchArea = document.getElementById('searchHistory');
 
 // variable for the clear search history button
 var searchClearButton = document.getElementById('clearButton');
+searchClearButton.addEventListener('click', byebyeData);
 
 // variable to ID the search textarea
 
@@ -62,6 +67,12 @@ searchButton.addEventListener('click', setCity);
 // variable to capture the five day divs
 
 var fiveDayDivs = document.getElementById('fiveDay');
+
+// variable to target the currentCity div
+
+var currentCity = document.getElementById('currentCity');
+
+// functionality variables
 
 // function to set the city value required for the geocode API
 function setCity() {
@@ -111,6 +122,7 @@ function fiveDayApi() {
         cityFiveDay = JSON.parse(localStorage.getItem('fiveDayResults'));
 
         searchUpdate();
+        renderWeatherData();
     })
 
     // cityFiveDay.list[0].main.feels_like = the 'feels like' temperature of the first interval 
@@ -157,6 +169,55 @@ function modifyCity(event) {
     }
 }
 
-// function to render weather data for the current city - UNHIDE #currentCity!
+// function to render weather data for the current city
 
-// function to render the current and five day dates
+function renderWeatherData() {
+    // "unveils" the weather panel and sets the current city
+    currentCity.removeAttribute('class', 'hide-me');
+    document.getElementById('currentCityName').textContent = city;
+
+    // sets values for today
+    document.getElementById('todaysDate').textContent = todaysDate;
+    document.getElementById('tempToday').textContent = 'Temp: ' + cityFiveDay.list[0].main.feels_like + '°F';
+    document.getElementById('windToday').textContent = 'Wind: ' + cityFiveDay.list[0].wind.speed + 'mph';
+    document.getElementById('humidityToday').textContent = 'Humidity: ' + cityFiveDay.list[0].main.humidity + '%';
+
+    // loops to set values for the five day run
+    var plusDivs = document.getElementsByClassName('plusDivs');
+    // loop for dates
+    var plusDivDates = document.getElementsByClassName('plusDivDates');
+    for (var i=0; i < plusDivs.length; i++) {
+        plusDivDates[i].innerHTML = moment().add(i+1, 'days').format('MM-DD-YYYY')
+    }
+
+    // loop for temperature
+    var plusDivTemps = document.getElementsByClassName('plusDivTemps');
+    var j = 0;
+    for (var i = 0; i < plusDivTemps.length; i++) {
+        plusDivTemps[i].innerHTML = 'Temp: ' + cityFiveDay.list[j].main.feels_like + '°F';
+        j += 6;
+    }   
+
+    // loop for wind
+    var plusDivWinds = document.getElementsByClassName('plusDivWinds');
+    var k = 0;
+    for (var i = 0; i < plusDivWinds.length; i++) {
+        plusDivWinds[i].innerHTML = 'Wind: ' + cityFiveDay.list[k].wind.speed + ' mph';
+        k += 6;
+    }
+
+    // loop for humidity
+    var plusDivHum = document.getElementsByClassName('plusDivHum');
+    var l = 0;
+    for (var i = 0; i < plusDivWinds.length; i++) {
+        plusDivHum[i].innerHTML = 'Humidity: ' + cityFiveDay.list[l].main.humidity + '%';
+        l += 6;
+    }
+}
+
+// function to clear local storage
+
+function byebyeData() {
+    localStorage.clear();
+    document.getElementById('clearText').textContent = 'Past search data cleared. Your slate will be blank on refresh.'
+}

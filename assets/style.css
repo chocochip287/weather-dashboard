@@ -1,11 +1,9 @@
 header {
     text-align: center;
-    border: 2px solid orange;
     position: static;
 }
 
 body {
-    border: 2px solid red;
     background:rgb(53, 57, 68);
     color: white;
 }
@@ -26,7 +24,6 @@ li {
 #searchDiv {
     display: flex;
     flex-direction: column;
-    border: 2px solid green;
     width: 30%;
     padding: 15px;
 }
@@ -49,7 +46,6 @@ li {
 }
 
 #currentCity {
-    border: 2px solid black;
     width: 70%;
     padding: 10px;
 }
@@ -73,6 +69,12 @@ li {
 #clearButton {
     background-color: red;
     color: white;
+}
+
+#clearText {
+    color: white;
+    font-style: bold italic;
+    font-size: .9em;
 }
 
 .hide-me {
