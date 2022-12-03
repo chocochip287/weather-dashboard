@@ -24,8 +24,20 @@ var geocodedCityLat;
 var geocodedCityLon;
 // placeholder for the 5-day API URL
 var fiveDayURL;
-// placeholder for the current city's 5-day data
-var cityFiveDay;
+// placeholder for the current city's 5-day data - uses localStorage item if available
+if (localStorage.getItem('fiveDayResults') === null) {
+    var cityFiveDay = [];
+} else {
+    var cityFiveDay = JSON.parse(localStorage.getItem('fiveDayResults'));
+}
+
+// defines the cities variable based on whether or not any cities existed in localStorage
+
+if (localStorage.getItem('cities') === null) {
+    var cities = [];
+} else {
+    var cities = JSON.parse(localStorage.getItem('cities'));
+}
 
 // document variables
 
@@ -47,13 +59,9 @@ var searchButton = document.getElementById('searchButton');
 
 searchButton.addEventListener('click', setCity);
 
-// defines the cities variable based on whether or not any cities existed in localStorage
+// variable to capture the five day divs
 
-if (localStorage.getItem('cities') === null) {
-    var cities = [];
-} else {
-    var cities = JSON.parse(localStorage.getItem('cities'));
-}
+var fiveDayDivs = document.getElementById('fiveDay');
 
 // function to set the city value required for the geocode API
 function setCity() {
@@ -149,6 +157,6 @@ function modifyCity(event) {
     }
 }
 
-// function to render weather data for the current city
+// function to render weather data for the current city - UNHIDE #currentCity!
 
-// pageload function to render cities buttons if anything exists in its localstorage container
+// function to render the current and five day dates
