@@ -6,13 +6,21 @@ header {
 
 body {
     border: 2px solid red;
-    height: 500px;
     background:rgb(53, 57, 68);
     color: white;
 }
 
 #main {
     display: flex;
+}
+
+ul {
+    list-style-type: none;
+    padding: 2px 6px;
+}
+
+li {
+    padding: 2px 0px;
 }
 
 #searchDiv {
@@ -39,6 +47,11 @@ body {
 #currentCity {
     border: 2px solid black;
     width: 70%;
+    padding: 10px;
+}
+
+#today {
+    padding-left: 5px;
 }
 
 #fiveDay {
@@ -50,7 +63,6 @@ body {
     background: rgb(44, 47, 59);
     color: white;
     margin: 5px;
-    padding: 0px 9px 2px 2px;
     align-items: center;
 }
 .hide-me {
