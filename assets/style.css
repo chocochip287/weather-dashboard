@@ -7,6 +7,8 @@ header {
 body {
     border: 2px solid red;
     height: 500px;
+    background:rgb(53, 57, 68);
+    color: white;
 }
 
 #main {
@@ -18,6 +20,11 @@ body {
     flex-direction: column;
     border: 2px solid green;
     width: 30%;
+    padding: 15px;
+}
+
+#today {
+    border: 2px solid white;
 }
 
 #searchButton {
@@ -34,6 +41,18 @@ body {
     width: 70%;
 }
 
+#fiveDay {
+    display: flex;
+    flex-direction: row;
+}
+
+.plusDivs {
+    background: rgb(44, 47, 59);
+    color: white;
+    margin: 5px;
+    padding: 0px 9px 2px 2px;
+    align-items: center;
+}
 .hide-me {
     display: none;
 }
