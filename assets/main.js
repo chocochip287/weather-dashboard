@@ -187,7 +187,7 @@ function renderWeatherData() {
 
     // loop for temperature
     var plusDivTemps = document.getElementsByClassName('plusDivTemps');
-    var j = 0;
+    var j = 6;
     for (var i = 0; i < plusDivTemps.length; i++) {
         plusDivTemps[i].innerHTML = 'Temp: ' + cityFiveDay.list[j].main.feels_like + '°F';
         j += 6;
@@ -195,7 +195,7 @@ function renderWeatherData() {
 
     // loop for wind
     var plusDivWinds = document.getElementsByClassName('plusDivWinds');
-    var k = 0;
+    var k = 6;
     for (var i = 0; i < plusDivWinds.length; i++) {
         plusDivWinds[i].innerHTML = 'Wind: ' + cityFiveDay.list[k].wind.speed + ' mph';
         k += 6;
@@ -203,7 +203,7 @@ function renderWeatherData() {
 
     // loop for humidity
     var plusDivHum = document.getElementsByClassName('plusDivHum');
-    var l = 0;
+    var l = 6;
     for (var i = 0; i < plusDivWinds.length; i++) {
         plusDivHum[i].innerHTML = 'Humidity: ' + cityFiveDay.list[l].main.humidity + '%';
         l += 6;
